@@ -19,3 +19,9 @@ exports.getEvent = function(id) {
 		if (events[i].id == id) { return events[i];}
 	}
  }
+
+ exports.newEvent = function(params) {
+ 	var newEv = {id: events.length+1, name: params.name, date: new Date(), description: params.description}
+ 	events.push(newEv);
+ 	return newEv;
+ }
