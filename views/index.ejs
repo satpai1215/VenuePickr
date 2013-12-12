@@ -1,0 +1,17 @@
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+
+<ul>
+<% events.forEach(function(event) { %>
+	<li>
+		<a href = "/events/<%=event.id %>"><%= event.name %></a>
+		<p><%= event.date %></p>
+		<p><%= event.description %></p>
+
+	</li>
+
+<% }); %>
+
+
+
+</ul>
