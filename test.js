@@ -2,13 +2,13 @@ var express = require("express");
 var http = require("http");
 var app = express();
 
+var server = http.createServer(app);
+var socket = io.listen(server);
 
- 
-app.get("/hello/:who", function(req, res) {
-		res.redirect("http://www.google.com");
-	res.writeHead(200, { "Content-Type": "text/plain" });
-  	res.end("Hello, " + req.params.who + ".");
-  // Fun fact: this has security issues
+socket.on('connection', function(socket) {
+  console.log('socket.io connected');
 });
 
-http.createServer(app).listen(1337);
+socket.on('data', function(data) {
+  console.log(data);
+});

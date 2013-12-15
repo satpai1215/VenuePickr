@@ -16,8 +16,11 @@ exports.index = function(req, res){
 
 exports.show = function(req, res){
   var ev = events.getEvent(req.params.id);
-  res.render('show', { title: 'VenuePickr', event: ev });
-  console.log(res);
+  if(ev) {
+  	res.render('show', { title: 'VenuePickr', event: ev });
+  } else {
+  	res.send("That webpage does not exist");
+  }
 };
 
 /*
@@ -25,7 +28,7 @@ exports.show = function(req, res){
  */
 
 exports.create = function(req, res){
-	console.log(req);
+	console.log(req.cookies);
   var ev = events.newEvent({name: req.body.name, description: req.body.description});
-  res.render('show', { title: 'VenuePickr', event: ev });
+  res.redirect('/');
 };

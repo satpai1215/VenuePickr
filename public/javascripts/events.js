@@ -18,6 +18,7 @@ exports.getEvent = function(id) {
 	for(var i = 0; i < events.length; i++) {
 		if (events[i].id == id) { return events[i];}
 	}
+	return false;
  }
 
  exports.newEvent = function(params) {

@@ -5,8 +5,6 @@
 <% events.forEach(function(event) { %>
 	<li>
 		<a href = "/events/<%=event.id %>"><%= event.name %></a>
-		<p><%= event.date %></p>
-		<p><%= event.description %></p>
 
 	</li>
 
@@ -16,9 +14,9 @@
 
 </ul>
 
-<form id = "new-event-form" method="post">
+<form id = "new-event-form" action = "createEvent" method="post">
 	<h3> Create a New Event!</h3>
-  	<p>Name: <input type="text" name="name" /></p>
-   	<p>Description: <input type="text" name="description" /></p>
-   	<p><input type="submit" value="Add Event" /></p>
+  	<p>Name: <input id = 'event-name-input' type="text" name="name" /></p>
+   	<p>Description: <textarea id = 'event-description-input' name="description"></textarea></p>
+   	<input id = 'event-form-submit' type='submit' value = 'Add Event'/>
 </form>

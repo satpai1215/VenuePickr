@@ -1,3 +1,14 @@
 <h1><%= event.name %></h1>
 <p>Date: <%= event.date %></p>
 <p>Description: <%= event.description %> </p>
+
+
+<script>
+  var socket = io.connect('http://localhost:3000');
+
+	$('#send').on('click', function(event) {
+  		event.preventDefault();
+  		console.log('send clicked');
+  		socket.emit('createEvent', {name:$('#event-name-input').val(), description: $('#event-description-input').val()});
+	});
+</script>
