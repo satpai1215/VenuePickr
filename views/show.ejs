@@ -2,13 +2,37 @@
 <p>Date: <%= event.date %></p>
 <p>Description: <%= event.description %> </p>
 
+<form id = "new-venue-form">
+	<h3> Suggest a Venue!</h3>
+  	<p>Venue Name: <input id = 'venue-name-input' type="text" name="name" /></p>
+   	<p>Address: <textarea id = 'venue-address-input' name="address"></textarea></p>
+   	<p>Your Name: <input id = 'venue-owner-input' type="text" name="owner" /></p>
+   	<button id = 'venue-form-submit' type='submit'>Add Venue</button>
+</form>
+
+
+<ul id = 'venue-list'>
+<% event.venues.forEach(function(venue) { %>
+	<li>
+		<p><%= venue.name %></p>
+		<p><%= venue.address %></p>
+		<p><%= venue.owner %></p>
+	</li>
+	
+<% }); %>
+</ul>
 
 <script>
   var socket = io.connect('http://localhost:3000');
 
-	$('#send').on('click', function(event) {
+  socket.on('venueSaved', function(venue) {
+ 	 $('#venue-list').append('<li><p>' + venue.name + '</p><p>' + venue.address + '</p><p>' + venue.owner + '</p></li>')
+  });
+
+	$('#venue-form-submit').on('click', function(event) {
   		event.preventDefault();
   		console.log('send clicked');
-  		socket.emit('createEvent', {name:$('#event-name-input').val(), description: $('#event-description-input').val()});
+  		socket.emit('addVenue', {event_id: <%=event.id %>, name:$('#venue-name-input').val(), address: $('#venue-address-input').val(), owner: $('#venue-owner-input').val()});
+
 	});
 </script>

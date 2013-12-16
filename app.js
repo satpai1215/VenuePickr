@@ -10,6 +10,7 @@ var http = require('http');
 var path = require('path');
 var partials = require('express-partials')
 
+ var events = require('./public/javascripts/events');
 
 var app = express();
 
@@ -34,18 +35,26 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
+app.get('/events', routes.index);
 app.get('/events/:id', routes.show);
 app.post('/createEvent', routes.create)
 //app.get('/users', user.list);
 
 var server = http.createServer(app);
-var socket = require('socket.io').listen(server);
+var io = require('socket.io').listen(server);
 server.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-socket.on('connection', function(socket) {
+io.sockets.on('connection', function(socket) {
 	console.log('socket.io connected');
+
+	socket.on('addVenue', function(data) {
+		var venue = events.addVenue(data);
+
+		//submit to all clients
+		io.sockets.emit('venueSaved', venue );
+	});
 });
 
 
